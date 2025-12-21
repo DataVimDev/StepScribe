@@ -1,0 +1,14 @@
+[project]
+name = "stepscribe"
+version = "0.1.0"
+description = "Write AWS Step Function State Machines in python and export to AWS States Language JSON. Allows for easy reuse of states or state components as well as generating complex state machines from simple pieces. Integrates with other tools like Pulumi to easily have a single python definition of the state machine that can generate specific JSON for multiple AWS environments."
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "boto3>=1.42.14",
+]
+
+[dependency-groups]
+dev = [
+    "pre-commit>=4.5.1",
+]
