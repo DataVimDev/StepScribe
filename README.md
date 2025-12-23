@@ -1,4 +1,5 @@
-![logo.png]
+![StepScribe logo](logo.png)
+
 # StepScribe
 
 A package to write AWS Step Function state machines using python and output valid AWS states language JSON or to various visualization formats.
