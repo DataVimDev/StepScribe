@@ -1,8 +1,10 @@
 from dataclasses import dataclass
 from typing import Any
+
+from ..components import Catcher, Retrier
 from ..state_machine import StateMachine
 from .base_state import State
-from ..components import Retrier, Catcher
+
 
 @dataclass
 class Parallel(State):
@@ -15,5 +17,3 @@ class Parallel(State):
     result_selector: Any
     retry: Retrier
     catch_: list[Catcher]
-
-

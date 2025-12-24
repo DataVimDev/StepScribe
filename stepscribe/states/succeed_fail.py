@@ -3,15 +3,15 @@ from typing import Any
 
 from .base_state import State
 
+
 @dataclass
 class Succeed(State):
-    type_ = 'Succeed'
+    type_ = "Succeed"
     output: Any
 
 
 @dataclass
 class Fail(State):
-    type_ = 'Fail'
+    type_ = "Fail"
     cause: Any
     error: Any
-

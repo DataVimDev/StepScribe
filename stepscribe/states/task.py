@@ -1,15 +1,17 @@
 from dataclasses import dataclass
-from .base_state import State
-from ..components import Retrier, Catcher
 from typing import Any
+
+from ..components import Catcher, Retrier
+from .base_state import State
+
 
 @dataclass
 class Task(State):
-    type: str='Task'
+    type: str = "Task"
     resource: str
-    arguments: str
+    arguments: dict
     output: Any
-    parameters: str|list|dict
+    parameters: str | list | dict
     credentials: str
     result_path: Any
     result_selector: Any
@@ -19,4 +21,3 @@ class Task(State):
     timeout_seconds_path: str
     heartbeat_seconds: int
     heartbeat_seconds_path: str
-
