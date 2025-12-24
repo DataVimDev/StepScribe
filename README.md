@@ -1,18 +1,29 @@
-![StepScribe logo](logo.png)
-
-# StepScribe
+!<div align="center"> <img src="logo.png" alt="Step Scribe logo"> </div>
 
 A package to write AWS Step Function state machines using python and output valid AWS states language JSON or to various visualization formats.
 
 ## Installation
-```pip install stescribe```
+```pip install stepscribe```
 
 ## Examples
 Here's a simple task example that invokes an existing lambda function:
 ```python
+from stepscribe import Task
 
+if __name__ == "__main__":
+    get_price = Task(
+                    name="Get Current Price",
+                    next_='Check Price',
+                    resource="arn:aws:states:::lambda:invoke",
+                    arguments={'Payload': {"product": "{% $states.context.Execution.Input.product %}"},
+                        'FunctionName': "arn:aws:lambda:<region>:account-id:function:priceWatcher:$LATEST",
+                    },
+                    assign={'currentPrice': "{% #states.result.Payload.current_price %}"}
+    )
+    print(get_price)               
 ```
-This python code generates the following Amazon states language JSON for the AWS step functin state machine:
+
+This python code generates the following Amazon states language JSON:
 
 ```json
 "Get Current Price": {
@@ -31,6 +42,37 @@ This python code generates the following Amazon states language JSON for the AWS
   }
 }
 ```
+
+The value of StepScribe comes from leveraging python to create or compose objects and then generate the corresponding JSON. For example, what if we wanted to get the current price of a product, check if it's on sale, and check our inventory. If each of these actions is a lambda, we now need 3 tasks like above, but with different names and lambda functions, and each of these to be a branch of a parallel state.
+
+```python
+from stepscribe import Task, Parallel
+
+def product_task(name: str, lambda_name: str) -> Task:
+    output=name.lower().replace(' ', '_').replace('get_', '')
+
+    return Task(
+                name=name,
+                next_='Check Price',
+                resource="arn:aws:states:::lambda:invoke",
+                arguments={'Payload': {"product": "{% $states.context.Execution.Input.product %}"},
+                        'FunctionName': f"arn:aws:lambda:<region>:account-id:function:{lambda_name}:$LATEST",
+                },
+                assign={'currentPrice': f"{{% #states.result.Payload.{output} %}}"}
+    )
+
+
+if __name__ == "__main__":
+
+    tasks = [("Get Current Price", "priceWatcher"), ("Check Sale", "isOnSale"), ("Get Current Inventory", "inventoryWatcher")]
+    step_function = Parallel(
+                        name="Product Check",
+                        branches=[product_task(task[0], task[1]) for task in tasks)]
+                        )
+    print(step_function)
+```
+This allows for considerable consolidation of the boilerplate and becomes more valuable if custom retry, catcher, item readers, or other components are reused across large state machines.
+
 ## Roadmap
 Currently, StepScribe has python dataclasses for states and major components and assumes only JSONata is being used (not JSONPath state attributes or query language) and writes these objects to the corresponding states language JSON.
 
