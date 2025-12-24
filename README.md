@@ -1,4 +1,4 @@
-!<div align="center"> <img src="logo.png" alt="Step Scribe logo"> </div>
+<div align="center"> <img src="logo.png" alt="Step Scribe logo" width="200"> </div>
 
 A package to write AWS Step Function state machines using python and output valid AWS states language JSON or to various visualization formats.
 
