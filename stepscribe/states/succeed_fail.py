@@ -7,11 +7,11 @@ from .base_state import State
 @dataclass
 class Succeed(State):
     type_ = "Succeed"
-    output: Any
+    output: Any = None
 
 
 @dataclass
 class Fail(State):
     type_ = "Fail"
-    cause: Any
-    error: Any
+    cause: Any = None
+    error: Any = None
