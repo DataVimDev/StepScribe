@@ -24,7 +24,7 @@ class StateEncoder(json.JSONEncoder):
                 else:
                     clean_obj_dict[k] = v
             return clean_obj_dict
-        return obj
+        return super().default(obj)
 
 
 @dataclass
