@@ -12,6 +12,7 @@ class Succeed(State):
     def __post_init__(self) -> None:
         return super().__post_init__()
 
+
 @dataclass
 class Fail(State):
     type_ = "Fail"

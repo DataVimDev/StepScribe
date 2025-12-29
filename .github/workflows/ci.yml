@@ -26,6 +26,6 @@ jobs:
       - name: Lint and Format
         run: uv run -m pre_commit run -a
 
-#      - name: Run tests
-#        run: uv run pytest testsame: ci
+      - name: Run tests
+        run: uv run pytest
 

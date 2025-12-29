@@ -20,10 +20,10 @@ class StateEncoder(json.JSONEncoder):
             clean_obj_dict = {}
             for k, v in obj_dict.items():
                 if k.endswith("_") and v is not None:
-                    clean_obj_dict[k[0:-1]] = v
+                    clean_obj_dict[k[0:-1].title().replace("_", "")] = v
                 elif v is not None:
-                    clean_obj_dict[k] = v
-            return clean_obj_dict
+                    clean_obj_dict[k.title().replace("_", "")] = v
+            return {clean_obj_dict.pop("Name"): clean_obj_dict}
         return super().default(obj)
 
 
@@ -32,7 +32,7 @@ class State:
     name: str
     type_: str | None = None  # usually set in __post_init__
     next_: str | None = None
-    end_: bool = False
+    end_: bool | None = None
     comment: str | None = None
     assign: str | None = None
     output: Any = None
