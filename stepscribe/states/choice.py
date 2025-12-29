@@ -9,3 +9,6 @@ class Choice(State):
     type: str = "Choice"
     choices: list[ChoiceRule] = field(default_factory=empty_list)
     default: str | None = None
+
+    def __post_init__(self) -> None:
+        return super().__post_init__()

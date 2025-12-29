@@ -19,9 +19,9 @@ class StateEncoder(json.JSONEncoder):
             obj_dict = asdict(obj)
             clean_obj_dict = {}
             for k, v in obj_dict.items():
-                if k.endswith("_"):
+                if k.endswith("_") and v is not None:
                     clean_obj_dict[k[0:-1]] = v
-                else:
+                elif v is not None:
                     clean_obj_dict[k] = v
             return clean_obj_dict
         return super().default(obj)
@@ -32,10 +32,16 @@ class State:
     name: str
     type_: str | None = None  # usually set in __post_init__
     next_: str | None = None
-    end_: bool = True
-    comment: str = ""
+    end_: bool = False
+    comment: str | None = None
+    assign: str | None = None
     output: Any = None
     query_language: str = "JSONata"
+
+    def __post_init__(self) -> None:
+        if self.end_ and self.next_ is not None:
+            raise ValueError("If next_ is being used, end_ must be False.")
+        return
 
     def to_json(self) -> str:
         return json.dumps(self, indent=4, cls=StateEncoder)

@@ -1,18 +1,20 @@
-from dataclasses import dataclass, field
-from typing import Any
+from dataclasses import dataclass
 
-from .base_state import State, empty_list
+from .base_state import State
 
 
 @dataclass
 class Pass(State):
     type_ = "Pass"
-    assign: list[dict] = field(default_factory=empty_list)
-    output: Any = None
 
 
 @dataclass
 class Wait(State):
     type_ = "Wait"
-    seconds: int = 60
+    seconds: int | None = None
     timestamp: str | None = None
+
+    def __post_init__(self) -> None:
+        super().__post_init__()
+        if (self.seconds is not None and self.timestamp is not None) or (self.seconds is None and self.timestamp is None):
+            raise ValueError("Exactly one of seconds and timestamp can be specified.")
