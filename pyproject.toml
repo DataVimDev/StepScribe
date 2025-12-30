@@ -32,9 +32,9 @@ dev = [
 description-file = 'README.md'
 
 [project.urls]
-Homepage = ""
-"Bug Reports" = ""
-"Source" = ""
+Homepage = "https://github.com/DataVimDev/StepScribe"
+"Bug Reports" = "https://github.com/DataVimDev/StepScribe/issues"
+"Source" = "https://github.com/DataVimDev/StepScribe"
 
 [tool.black]
 line_length = 88
