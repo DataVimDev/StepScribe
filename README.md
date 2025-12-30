@@ -1,4 +1,4 @@
-<div align="center"> <img src="https://raw.githubusercontent.com/DataVimDev/StepScribe/refs/head/main/logo.png" alt="Step Scribe logo" width="200"> </div>
+<div align="center"> <img src="https://raw.githubusercontent.com/DataVimDev/StepScribe/main/logo.png" alt="Step Scribe logo" width="200"> </div>
 
 A package to write AWS Step Function state machines using python and output valid AWS states language JSON or to various visualization formats.
 
