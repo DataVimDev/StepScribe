@@ -10,9 +10,10 @@ on:
     types: [published]
 
 jobs:
-  build-n-publish:
+  build-publish:
     name: Build and publish Python distro to PyPI
     runs-on: ubuntu-latest
+    environment: pypi
     permissions:
       # This permission is required for trusted publishing
       id-token: write
