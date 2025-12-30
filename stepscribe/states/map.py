@@ -1,7 +1,8 @@
 from dataclasses import dataclass
 
+from ..components import Catcher, ItemProcessor, ItemReader, ResultWriter, Retry
 from .base_state import State
-from ..components import ItemProcessor, Retry, Catcher, ResultWriter, ItemReader
+
 
 @dataclass
 class DistributedMap(State):
@@ -20,8 +21,6 @@ class DistributedMap(State):
     catch: list[Catcher] | None = None
 
 
-
-
 @dataclass
 class Map(State):
     type_ = "Map"
@@ -31,4 +30,3 @@ class Map(State):
     max_concurrency: int | str | None = None
     retry: Retry | None = None
     catch: list[Catcher] | None = None
-

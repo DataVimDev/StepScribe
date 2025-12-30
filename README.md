@@ -1,4 +1,4 @@
-<div align="center"> <img src="logo.png" alt="Step Scribe logo" width="200"> </div>
+<div align="center"> <img src="https://github.com/DataVimDev/StepScribe/blob/main/logo.png" alt="Step Scribe logo" width="200"> </div>
 
 A package to write AWS Step Function state machines using python and output valid AWS states language JSON or to various visualization formats.
 
@@ -18,7 +18,7 @@ if __name__ == "__main__":
                     arguments={'Payload': {"product": "{% $states.context.Execution.Input.product %}"},
                         'FunctionName': "arn:aws:lambda:<region>:account-id:function:priceWatcher:$LATEST",
                     },
-                    assign={'currentPrice': "{% #states.result.Payload.current_price %}"}
+                    assign={'currentPrice': "{% $states.result.Payload.current_price %}"}
     )
     print(get_price)               
 ```
@@ -58,7 +58,7 @@ def product_task(name: str, lambda_name: str) -> Task:
                 arguments={'Payload': {"product": "{% $states.context.Execution.Input.product %}"},
                         'FunctionName': f"arn:aws:lambda:<region>:account-id:function:{lambda_name}:$LATEST",
                 },
-                assign={'currentPrice': f"{{% #states.result.Payload.{output} %}}"}
+                assign={'currentPrice': f"{{% $states.result.Payload.{output} %}}"}
     )
 
 
@@ -77,6 +77,7 @@ This allows for considerable consolidation of the boilerplate and becomes more v
 Currently, StepScribe has python dataclasses for states and major components and assumes only JSONata is being used (not JSONPath state attributes or query language) and writes these objects to the corresponding states language JSON.
 
 The following features are planned:
+- [ ] Test coverage and documentation
 - [ ] JSONPath support
 - [ ] Write state machine to mermaidJS diagram
 - [ ] Read state machine
