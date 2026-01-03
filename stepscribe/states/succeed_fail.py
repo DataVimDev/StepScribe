@@ -6,12 +6,20 @@ from .base_state import State
 
 @dataclass
 class Succeed(State):
-    type_ = "Succeed"
-    output: Any
+    output: Any = None
+
+    def __post_init__(self) -> None:
+        super().__post_init__()
+        self.type_ = "Succeed"
+        return
 
 
 @dataclass
 class Fail(State):
-    type_ = "Fail"
-    cause: Any
-    error: Any
+    cause: Any = None
+    error: Any = None
+
+    def __post_init__(self) -> None:
+        super().__post_init__()
+        self.type_ = "Fail"
+        return

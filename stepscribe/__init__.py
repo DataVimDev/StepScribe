@@ -7,7 +7,7 @@ from .components import (
     Retry,
 )
 from .state_machine import StateMachine
-from .states import Fail, Parallel, Pass, Succeed, Task, Wait
+from .states import DistributedMap, Fail, Map, Parallel, Pass, Succeed, Task, Wait
 from .version import __version__, version  # noqa: F401
 
 __all__ = [
@@ -24,4 +24,6 @@ __all__ = [
     "ItemReader",
     "ResultWriter",
     "Retry",
+    "Map",
+    "DistributedMap",
 ]

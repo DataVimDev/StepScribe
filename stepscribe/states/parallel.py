@@ -1,19 +1,18 @@
-from dataclasses import dataclass
-from typing import Any
+from dataclasses import dataclass, field
 
-from ..components import Catcher, Retrier
+from ..components import Catcher, Retry
 from ..state_machine import StateMachine
-from .base_state import State
+from .base_state import State, empty_list
 
 
 @dataclass
 class Parallel(State):
-    branches: list[StateMachine]
-    parameters: str
-    arguments: str
-    output: Any
-    assign: Any
-    result_path: Any
-    result_selector: Any
-    retry: Retrier
-    catch_: list[Catcher]
+    branches: list[StateMachine] = field(default_factory=empty_list)
+    arguments: str | None = None
+    retry: Retry = None
+    catch_: list[Catcher] | None = None
+
+    def __post_init__(self) -> None:
+        super().__post_init__()
+        self.type_ = "Parallel"
+        return
