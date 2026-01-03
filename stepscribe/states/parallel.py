@@ -13,4 +13,6 @@ class Parallel(State):
     catch_: list[Catcher] | None = None
 
     def __post_init__(self) -> None:
-        return super().__post_init__()
+        super().__post_init__()
+        self.type_ = "Parallel"
+        return

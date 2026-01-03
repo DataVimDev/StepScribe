@@ -1,2 +1,9 @@
+from dataclasses import dataclass
+
+
+@dataclass
 class Catcher:
-    pass
+    error_equals: list[str]
+    next_: str
+    output: str | None = None
+    assign: dict | None = None

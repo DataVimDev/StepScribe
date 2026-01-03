@@ -14,7 +14,6 @@ def empty_reader():
 
 @dataclass
 class DistributedMap(State):
-    type_ = "Map"
     item_processor: ItemProcessor = field(default_factory=empty_processor)
     item_reader: ItemReader = field(default_factory=empty_reader)
     items: list | None = None
@@ -28,13 +27,22 @@ class DistributedMap(State):
     retry: Retry | None = None
     catch: list[Catcher] | None = None
 
+    def __post_init__(self) -> None:
+        super().__post_init__()
+        self.type_ = "Map"
+        return
+
 
 @dataclass
 class Map(State):
-    type_ = "Map"
     item_processor: ItemProcessor = field(default_factory=empty_processor)
     items: list | str | None = None
     item_selector: dict | None = None
     max_concurrency: int | str | None = None
     retry: Retry | None = None
     catch: list[Catcher] | None = None
+
+    def __post_init__(self) -> None:
+        super().__post_init__()
+        self.type_ = "Map"
+        return
