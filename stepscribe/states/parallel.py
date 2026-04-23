@@ -1,15 +1,13 @@
 from dataclasses import dataclass, field
 
 from ..components import Catcher, Retry
-from ..state_machine import StateMachine
 from .base_state import State, empty_list
-
 
 @dataclass
 class Parallel(State):
-    branches: list[StateMachine] = field(default_factory=empty_list)
+    branches: list = field(default_factory=empty_list)
     arguments: str | None = None
-    retry: Retry = None
+    retry: Retry | None = None
     catch_: list[Catcher] | None = None
 
     def __post_init__(self) -> None:
