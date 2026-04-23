@@ -3,6 +3,7 @@ from dataclasses import dataclass, field
 from ..components import Catcher, Retry
 from .base_state import State, empty_list
 
+
 @dataclass
 class Parallel(State):
     branches: list = field(default_factory=empty_list)
