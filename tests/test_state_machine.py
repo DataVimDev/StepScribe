@@ -25,9 +25,9 @@ def basic_state_machine_test() -> None:
         end_=True,
     )
     hello = StateMachine(
-            comment="A Hello World example of the Amazon States Language using a Pass state",
-            start_at="HelloWorld",
-            states=[hello_world]
+        comment="A Hello World example of the Amazon States Language using a Pass state",
+        start_at="HelloWorld",
+        states=[hello_world],
     )
 
     basic_json = json.loads(BASIC)
