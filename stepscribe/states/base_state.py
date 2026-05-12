@@ -34,7 +34,7 @@ class State:
     next_: str | None = None
     end_: bool | None = None
     comment: str | None = None
-    assign: str | None = None
+    assign: str | dict | None = None
     output: Any = None
     query_language: str = "JSONata"
 
