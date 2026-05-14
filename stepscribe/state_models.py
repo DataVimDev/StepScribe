@@ -1,9 +1,9 @@
+import json
 from datetime import datetime
 from typing import Any
 
 from pydantic import BaseModel, Field, model_validator
 from typing_extensions import Self
-import json
 
 from .component_models import (
     Catcher,
@@ -44,8 +44,9 @@ class State(BaseModel):
         model_json = self.model_dump_json(exclude_none=True)
         dict_from_json = json.loads(model_json)
         asl_dict = {
-            dict_from_json['Name']:
-                {k:v for k,v in dict_from_json.items() if k!= 'Name'}
+            dict_from_json["Name"]: {
+                k: v for k, v in dict_from_json.items() if k != "Name"
+            }
         }
         return asl_dict
 

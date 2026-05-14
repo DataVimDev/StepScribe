@@ -33,7 +33,7 @@ def basic_task_test() -> None:
             "FunctionName": "arn:aws:lambda:<region>:account-id:function:priceWatcher:$LATEST",
         },
         Assign={"currentPrice": "{% $states.result.Payload.current_price %}"},
-        End=False
+        End=False,
     )
 
     basic_json = json.loads(BASIC)
