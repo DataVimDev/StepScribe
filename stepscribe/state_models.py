@@ -3,6 +3,7 @@ from typing import Any
 
 from pydantic import BaseModel, Field, model_validator
 from typing_extensions import Self
+import json
 
 from .component_models import (
     Catcher,
@@ -34,6 +35,29 @@ class State(BaseModel):
                 "State must either have a defined Next state or be an End state."
             )
         return self
+
+    def to_asl(self) -> dict:
+        """
+        Returns the State model as an ASL compatible dictionary of the form
+        `{<state_name>: {<rest of state model>}}`
+        """
+        model_json = self.model_dump_json(exclude_none=True)
+        dict_from_json = json.loads(model_json)
+        asl_dict = {
+            dict_from_json['Name']:
+                {k:v for k,v in dict_from_json.items() if k!= 'Name'}
+        }
+        return asl_dict
+
+    def to_asl_json(self, indent: int = 4) -> str:
+        """
+        Amazon States Language json needs to be of the form
+            `{<state_name>: {<rest of pydantic state model>}}`
+        This function leverages pydantics serialization to dump the model to json (excluding unused optional fields) and restructures that JSON to be ASL compatible.
+        """
+        asl_dict = self.to_asl()
+        asl_json = json.dumps(asl_dict, indent=indent)
+        return asl_json
 
 
 class Pass(State):
@@ -75,7 +99,7 @@ class Choice(State):
 
 class Parallel(State):
     Type: str = Field(default="Parallel", frozen=True)
-    Branches: list = Field(default_facotry=[])
+    Branches: list = Field(default_factory=[])
     Arguments: str | None = None
     Retry: Retrier | None = None
     Catch: list[Catcher] | None = None

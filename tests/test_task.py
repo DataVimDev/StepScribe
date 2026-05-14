@@ -16,7 +16,8 @@ BASIC = """{
   },
   "Assign": {
     "currentPrice": "{% $states.result.Payload.current_price %}"
-  }
+  },
+  "End": false
 }
 }
     """
@@ -24,18 +25,19 @@ BASIC = """{
 
 def basic_task_test() -> None:
     get_price = Task(
-        name="Get Current Price",
-        next_="Check Price",
-        resource="arn:aws:states:::lambda:invoke",
-        arguments={
+        Name="Get Current Price",
+        Next="Check Price",
+        Resource="arn:aws:states:::lambda:invoke",
+        Arguments={
             "Payload": {"product": "{% $states.context.Execution.Input.product %}"},
             "FunctionName": "arn:aws:lambda:<region>:account-id:function:priceWatcher:$LATEST",
         },
-        assign={"currentPrice": "{% $states.result.Payload.current_price %}"},
+        Assign={"currentPrice": "{% $states.result.Payload.current_price %}"},
+        End=False
     )
 
     basic_json = json.loads(BASIC)
 
-    task_json = json.loads(get_price.to_json())
+    task_json = json.loads(get_price.to_asl_json())
 
     assert basic_json == task_json
