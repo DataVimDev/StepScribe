@@ -76,7 +76,7 @@ if __name__ == "__main__":
 This allows for considerable consolidation of the boilerplate and becomes more valuable if custom retry, catcher, item readers, or other components are reused across large state machines or for maintaining identical versions of state machines in multiple environments where resource arns can be provided via infrastructure as code without requiring multiple large messy JSON files to be kept in sync.
 
 ## Roadmap
-Currently, StepScribe uses pydantic models for state machine, states and major components and assumes only JSONata is being used (not JSONPath state attributes or query language) and writes these objects to the corresponding states language JSON. StepScribe also provides a `load_from_asl_json` that can take a JSON string or a filename for the JSON file and returns a state machine pydantic model. 
+Currently, StepScribe uses pydantic models for state machine, states and major components and assumes only JSONata is being used (not JSONPath state attributes or query language) and writes these objects to the corresponding states language JSON. StepScribe also provides a `load_asl_json` that can take a JSON string or a filename for the JSON file and returns a state machine pydantic model. 
 
 The following features are planned:
 - [ ] Test coverage and documentation
