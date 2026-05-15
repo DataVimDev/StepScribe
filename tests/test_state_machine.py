@@ -20,18 +20,18 @@ BASIC = """{
 
 def basic_state_machine_test() -> None:
     hello_world = Pass(
-        name="HelloWorld",
-        output="Hello World!",
-        end_=True,
+        Name="HelloWorld",
+        Output="Hello World!",
+        End=True,
     )
     hello = StateMachine(
-        comment="A Hello World example of the Amazon States Language using a Pass state",
-        start_at="HelloWorld",
-        states=[hello_world],
+        Comment="A Hello World example of the Amazon States Language using a Pass state",
+        StartAt="HelloWorld",
+        States=[hello_world],
     )
 
     basic_json = json.loads(BASIC)
 
-    state_machine_json = json.loads(hello.to_json())
+    state_machine_json = json.loads(hello.to_asl_json())
 
     assert basic_json == state_machine_json
