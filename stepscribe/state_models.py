@@ -18,7 +18,7 @@ from .component_models import (
 class State(BaseModel):
     Name: str
     Next: str | None = None
-    End: bool = True
+    End: bool | None = None
     Comment: str | None = None
     Assign: dict | None = None
     Output: Any = None
@@ -27,13 +27,7 @@ class State(BaseModel):
     @model_validator(mode="after")
     def check_end_next(self) -> Self:
         if self.End and self.Next is not None:
-            raise ValueError(
-                "State can not be and End state with a defined Next state."
-            )
-        elif self.Next is None and not self.End:
-            raise ValueError(
-                "State must either have a defined Next state or be an End state."
-            )
+            raise ValueError("State cannot be an End state with a defined Next state.")
         return self
 
     def to_asl(self) -> dict:
@@ -67,7 +61,7 @@ class Pass(State):
 
 class Wait(State):
     Type: str = Field(default="Wait", frozen=True)
-    Seconds: int | None = None
+    Seconds: int | str | None = None
     Timestamp: datetime | None = None
 
     @model_validator(mode="after")
